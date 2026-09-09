@@ -30,7 +30,12 @@ function Page() {
   const [dataset, setDataset] = useState<Dataset>(HUYET_AP_100)
   const [manual, setManual] = useState<ConfusionMatrix>({ tp: 25, fn: 15, fp: 10, tn: 50 })
 
-  const nominalAttributes = dataset.attributes.filter((a) => a.type === 'nominal')
+  // Phải memo: mảng này nằm trong dependency của useEffect bên dưới, tạo mới
+  // mỗi lần render thì effect chạy lại ở MỌI lần render.
+  const nominalAttributes = useMemo(
+    () => dataset.attributes.filter((a) => a.type === 'nominal'),
+    [dataset],
+  )
   const [actualAttr, setActualAttr] = useState('Thực tế')
   const [predictedAttr, setPredictedAttr] = useState('Dự đoán')
   const [positiveLabel, setPositiveLabel] = useState('Cao')

@@ -1,36 +1,13 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowRight, FlaskConical, GitBranch, ListOrdered, ShieldOff } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { ALGORITHM_NAV } from '@/lib/nav'
 import { ALL_SAMPLES } from '@/data/samples'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export const Route = createFileRoute('/')({
   component: Home,
 })
-
-const PRINCIPLES = [
-  {
-    icon: ShieldOff,
-    title: 'Không gọi thư viện ML',
-    body: 'Cả 8 thuật toán viết bằng TypeScript thuần. Không sklearn, không ml.js, không tensorflow — đề đòi cài đặt thuật toán chứ không phải gọi hàm có sẵn.',
-  },
-  {
-    icon: ListOrdered,
-    title: 'Hiện đủ bước trung gian',
-    body: 'Mỗi thuật toán trả về mảng các bước, không chỉ kết quả cuối. Bảng nào trong slide thì app dựng lại đúng bảng đó, xem được cả trọn bài lẫn đi từng bước một.',
-  },
-  {
-    icon: FlaskConical,
-    title: 'Đối chiếu được với slide',
-    body: 'Mỗi thuật toán có test so kết quả với chính ví dụ trong slide thầy. Chỗ nào app lệch với slide đều được ghi rõ lý do thay vì ép cho khớp.',
-  },
-  {
-    icon: GitBranch,
-    title: 'Chạy hoàn toàn trong trình duyệt',
-    body: 'Không backend, không database. Mở trang là chạy, không có gì để chết vào ngày nộp.',
-  },
-]
 
 function Home() {
   return (
@@ -66,23 +43,6 @@ function Home() {
                 </CardHeader>
               </Card>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="space-y-3">
-        <h2 className="text-lg font-semibold">Cách làm</h2>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {PRINCIPLES.map(({ icon: Icon, title, body }) => (
-            <Card key={title} className="gap-2 py-4">
-              <CardHeader className="px-4">
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Icon className="size-4 shrink-0" />
-                  {title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-muted-foreground px-4 text-sm">{body}</CardContent>
-            </Card>
           ))}
         </div>
       </section>

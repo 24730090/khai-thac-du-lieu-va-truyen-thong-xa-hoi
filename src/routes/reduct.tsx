@@ -62,6 +62,12 @@ function Page() {
 
   const [selectedReduct, setSelectedReduct] = useState(0)
 
+  // Đổi bộ dữ liệu thì số reduct đổi theo, chỉ số cũ có thể trỏ ra ngoài mảng.
+  const reductCount = run.ok ? run.value.result.reducts.length : 0
+  useEffect(() => {
+    setSelectedReduct((i) => (i < reductCount ? i : 0))
+  }, [reductCount])
+
   return (
     <AlgorithmPage
       title="Tập thô — Reduct"

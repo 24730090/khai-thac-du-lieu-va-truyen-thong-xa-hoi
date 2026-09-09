@@ -81,10 +81,28 @@ export function DatasetInput({
     }
   }
 
+  /**
+   * Ô đang gõ dở. Cần cái này vì ô số là input có kiểm soát: gõ "1.5" thì tới
+   * dấu chấm `Number("1.")` ra 1, ô hiện lại "1" và con trỏ nhảy về sau số —
+   * không gõ tiếp phần thập phân được. Giữ nguyên chuỗi người dùng gõ cho tới
+   * khi rời ô, còn dataset vẫn nhận giá trị đã parse ngay từng phím.
+   */
+  const [draft, setDraft] = useState<{ cell: string; text: string } | null>(null)
+
+  function cellText(rowIndex: number, attrName: string, raw: string | number | undefined) {
+    const id = `${rowIndex}:${attrName}`
+    if (draft?.cell === id) return draft.text
+    if (typeof raw === 'number' && Number.isNaN(raw)) return ''
+    return String(raw ?? '')
+  }
+
   function updateCell(rowIndex: number, attrName: string, raw: string) {
+    setDraft({ cell: `${rowIndex}:${attrName}`, text: raw })
     const attr = value.attributes.find((a) => a.name === attrName)
+    const parsed =
+      attr?.type === 'numeric' ? (raw.trim() === '' ? Number.NaN : Number(raw)) : raw
     const rows = value.rows.map((r, i) =>
-      i === rowIndex ? { ...r, [attrName]: attr?.type === 'numeric' ? Number(raw) : raw } : r,
+      i === rowIndex ? { ...r, [attrName]: parsed } : r,
     )
     onChange({ ...value, rows })
   }
@@ -185,9 +203,10 @@ export function DatasetInput({
                       <td key={a.name} className="border-b p-1">
                         <Input
                           className="h-8 border-transparent shadow-none"
-                          value={String(row[a.name] ?? '')}
+                          value={cellText(r, a.name, row[a.name])}
                           inputMode={a.type === 'numeric' ? 'decimal' : 'text'}
                           onChange={(e) => updateCell(r, a.name, e.target.value)}
+                          onBlur={() => setDraft(null)}
                         />
                       </td>
                     ))}
