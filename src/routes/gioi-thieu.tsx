@@ -9,33 +9,32 @@ export const Route = createFileRoute('/gioi-thieu')({
 })
 
 /**
- * Phần trăm phân công phải khớp HỆT ba chỗ: file này,
- * docs/phan-cong.md, và trang phân công trong báo cáo (ngay sau mục lục).
- * Lệch nhau là nhóm tự khai mâu thuẫn ngay trước mặt người chấm.
+ * Trang này KHÔNG ghi phần trăm phân công — chỉ ghi ai làm phần nào.
+ *
+ * Rubric đòi số phần trăm ở TRANG PHÂN CÔNG TRONG FILE BÁO CÁO, đặt ngay sau
+ * mục lục (docs/rubric.md tiêu chí 1.2-1.4, ngưỡng #1 và #2). Đó là tiêu chí
+ * T1 chấm báo cáo, không phải T2 chấm chương trình demo. Con số vẫn nằm ở
+ * docs/phan-cong.md và sẽ vào báo cáo cùng slide 18.
  */
 const MEMBERS = [
   {
     name: 'Nguyễn Ngọc Danh',
     id: '24730090',
-    percent: 28,
     work: 'Khung dự án, component dùng chung, bộ dữ liệu mẫu, ID3, trang chủ, triển khai',
   },
   {
     name: 'Nguyễn Thanh Phúc',
     id: '24730131',
-    percent: 25,
     work: 'Naive Bayes, Đánh giá mô hình phân lớp, Rough set / Reduct',
   },
   {
     name: 'Mai Hoàng Hưng',
     id: '24730099',
-    percent: 24,
     work: 'Gom cụm k-means, Mạng Kohonen (SOM)',
   },
   {
     name: 'Nguyễn Thị Hồng Phúc',
     id: '24730132',
-    percent: 23,
     work: 'Tiền xử lý dữ liệu, Apriori và vector biểu diễn',
   },
 ]
@@ -51,8 +50,6 @@ const TECH = [
 ]
 
 function Page() {
-  const totalPercent = MEMBERS.reduce((s, m) => s + m.percent, 0)
-
   return (
     <div className="space-y-10">
       <header className="space-y-2">
@@ -68,9 +65,9 @@ function Page() {
         <h2 className="text-lg font-semibold">Phân công công việc</h2>
         <MatrixTable
           table={{
-            caption: `Tổng ${totalPercent}%`,
-            head: ['Họ và tên', 'MSSV', '%', 'Phần phụ trách'],
-            body: MEMBERS.map((m) => [m.name, m.id, `${m.percent}`, m.work]),
+            caption: `${MEMBERS.length} thành viên`,
+            head: ['Họ và tên', 'MSSV', 'Phần phụ trách'],
+            body: MEMBERS.map((m) => [m.name, m.id, m.work]),
           }}
         />
       </section>
