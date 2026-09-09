@@ -9,9 +9,20 @@ import { cn } from '@/lib/utils'
  * mẫu, tên cột, kiểu chuẩn hoá). `<select>` gốc chạy đúng trên mọi máy, dùng
  * được bằng bàn phím sẵn, và không thêm một lớp state nào để hỏng lúc demo.
  */
-function Select({ className, children, ...props }: React.ComponentProps<'select'>) {
+type SelectProps = React.ComponentProps<'select'> & {
+  /**
+   * Class cho khung ngoài — dùng để đặt BỀ RỘNG của cả điều khiển.
+   *
+   * Mũi tên chevron định vị theo khung ngoài này, nên chỉ đặt `w-auto` cho
+   * riêng thẻ `<select>` sẽ làm mũi tên rời hẳn khỏi ô, dạt ra mép phải. Muốn
+   * select gọn thì đặt `containerClassName="w-auto"`.
+   */
+  containerClassName?: string
+}
+
+function Select({ className, containerClassName, children, ...props }: SelectProps) {
   return (
-    <div className="relative inline-flex w-full">
+    <div className={cn('relative inline-flex w-full min-w-0', containerClassName)}>
       <select
         data-slot="select"
         className={cn(

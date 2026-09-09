@@ -64,7 +64,8 @@ function Page() {
             </Label>
             <Select
               id="column"
-              className="h-8 w-auto text-xs"
+              className="h-8 text-xs"
+              containerClassName="w-auto"
               value={activeColumn}
               onChange={(e) => setColumn(e.target.value)}
             >

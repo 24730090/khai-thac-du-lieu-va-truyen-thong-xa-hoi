@@ -211,7 +211,8 @@ function ClusterChart({
             </Label>
             <Select
               id="x-dim"
-              className="h-7 w-auto text-xs"
+              className="h-7 text-xs"
+              containerClassName="w-auto"
               value={safeX}
               onChange={(e) => setXDim(Number(e.target.value))}
             >
@@ -228,7 +229,8 @@ function ClusterChart({
             </Label>
             <Select
               id="y-dim"
-              className="h-7 w-auto text-xs"
+              className="h-7 text-xs"
+              containerClassName="w-auto"
               value={safeY}
               onChange={(e) => setYDim(Number(e.target.value))}
             >
