@@ -7,7 +7,7 @@ Tám thuật toán được **cài đặt lại bằng TypeScript thuần** — 
 toàn trong trình duyệt. Mỗi thuật toán hiện đủ **bước trung gian** theo đúng khuôn bảng trong slide
 thầy, không chỉ kết quả cuối.
 
-- Bản chạy thật: *chưa deploy* — điền URL vào đây sau khi import repo lên Vercel
+- Bản chạy thật: https://khai-thac-du-lieu-va-truyen-thong-x.vercel.app
 - Mã nguồn: https://github.com/24730090/khai-thac-du-lieu-va-truyen-thong-xa-hoi
 
 ## Thành viên
@@ -19,7 +19,8 @@ thầy, không chỉ kết quả cuối.
 | Mai Hoàng Hưng | 24730099 | 24 | k-means, Kohonen SOM |
 | Nguyễn Thị Hồng Phúc | 24730132 | 23 | Tiền xử lý dữ liệu, Apriori |
 
-Tổng: **100 %**.
+Tổng: **100 %**. Con số này khớp `docs/phan-cong.md`; trang `/gioi-thieu` của app cố tình
+không hiện %, vì rubric đòi phần trăm ở **trang phân công trong file báo cáo** chứ không ở app.
 
 ## Tám thuật toán
 
