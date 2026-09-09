@@ -9,35 +9,49 @@ export const Route = createFileRoute('/gioi-thieu')({
 })
 
 /**
- * Trang này KHÔNG ghi phần trăm phân công — chỉ ghi ai làm phần nào.
+ * Bảng phân công có SỐ PHẦN TRĂM, và tổng phải đúng 100.
  *
- * Rubric đòi số phần trăm ở TRANG PHÂN CÔNG TRONG FILE BÁO CÁO, đặt ngay sau
- * mục lục (docs/rubric.md tiêu chí 1.2-1.4, ngưỡng #1 và #2). Đó là tiêu chí
- * T1 chấm báo cáo, không phải T2 chấm chương trình demo. Con số vẫn nằm ở
- * docs/phan-cong.md và sẽ vào báo cáo cùng slide 18.
+ * Đề đòi số phần trăm ở trang phân công trong file báo cáo (docs/rubric.md
+ * ngưỡng #1, #2). Trang này lặp lại đúng con số ấy để người mở app thấy cùng
+ * một thông tin với người đọc báo cáo.
+ *
+ * BỐN CHỖ phải khai cùng bộ số, lệch một chỗ là nhóm tự khai mâu thuẫn ngay
+ * trước mặt người chấm (điều cấm C5):
+ *   1. file này
+ *   2. docs/phan-cong.md
+ *   3. trang phân công trong báo cáo (report/tools/common.py THANH_VIEN)
+ *   4. slide 18
+ * Sửa thì sửa cả bốn.
  */
 const MEMBERS = [
   {
     name: 'Nguyễn Ngọc Danh',
     id: '24730090',
     work: 'Khung dự án, component dùng chung, bộ dữ liệu mẫu, ID3, trang chủ, triển khai',
+    percent: 28,
   },
   {
     name: 'Nguyễn Thanh Phúc',
     id: '24730131',
     work: 'Naive Bayes, Đánh giá mô hình phân lớp, Rough set / Reduct',
+    percent: 25,
   },
   {
     name: 'Mai Hoàng Hưng',
     id: '24730099',
     work: 'Gom cụm k-means, Mạng Kohonen (SOM)',
+    percent: 24,
   },
   {
     name: 'Nguyễn Thị Hồng Phúc',
     id: '24730132',
     work: 'Tiền xử lý dữ liệu, Apriori và vector biểu diễn',
+    percent: 23,
   },
 ]
+
+/** Tổng % phải bằng 100 — đề ghi rõ. Tính ra để hiển thị, không gõ cứng. */
+const TOTAL_PERCENT = MEMBERS.reduce((s, m) => s + m.percent, 0)
 
 const TECH = [
   ['Giao diện', 'React 19 + TypeScript, dựng bằng Vite'],
@@ -65,9 +79,12 @@ function Page() {
         <h2 className="text-lg font-semibold">Phân công công việc</h2>
         <MatrixTable
           table={{
-            caption: `${MEMBERS.length} thành viên`,
-            head: ['Họ và tên', 'MSSV', 'Phần phụ trách'],
-            body: MEMBERS.map((m) => [m.name, m.id, m.work]),
+            caption: `${MEMBERS.length} thành viên, tổng ${TOTAL_PERCENT}%`,
+            head: ['Họ và tên', 'MSSV', 'Phần phụ trách', 'Tỉ lệ'],
+            body: [
+              ...MEMBERS.map((m) => [m.name, m.id, m.work, `${m.percent}%`]),
+              ['', '', 'Tổng cộng', `${TOTAL_PERCENT}%`],
+            ],
           }}
         />
       </section>
