@@ -1,0 +1,8 @@
+# Chuẩn hoá xuống dòng: repo lưu LF, máy Windows checkout theo cấu hình cá nhân.
+# 4 người dùng 4 máy khác nhau — không có file này thì diff đầy dòng "đổi toàn bộ file".
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.svg text
+pnpm-lock.yaml -diff linguist-generated
