@@ -49,12 +49,17 @@ function Page() {
 
   /**
    * U0 của slide (trang 19): cụm 1 chỉ có điểm đầu, mọi điểm còn lại dồn vào
-   * cụm cuối. Tắt đi thì mỗi cụm nhận một điểm đầu rồi phần dư dồn cụm cuối —
-   * cùng quy tắc, chỉ khác chỗ bắt đầu.
+   * cụm 2. Với k > 2, phần còn lại chia xoay vòng cho các cụm từ 2 tới k —
+   * dồn hết vào cụm 2 sẽ để các cụm sau RỖNG ngay từ vòng 1, và trọng tâm của
+   * cụm rỗng không có nghĩa gì.
+   *
+   * Tắt ô này thì mỗi cụm nhận một điểm đầu rồi phần dư dồn cụm cuối.
    */
   const initialAssignment = useMemo(() => {
-    if (!useSlideInit) return undefined
-    return Array.from({ length: pointCount }, (_, i) => (i === 0 ? 0 : Math.min(1, k - 1)))
+    if (!useSlideInit || k < 1) return undefined
+    return Array.from({ length: pointCount }, (_, i) =>
+      i === 0 ? 0 : k === 1 ? 0 : 1 + ((i - 1) % (k - 1)),
+    )
   }, [useSlideInit, pointCount, k])
 
   const run = useMemo(() => {

@@ -123,9 +123,16 @@ export function parseCsv(text: string, options: ParseCsvOptions = {}): Dataset {
   }
 }
 
-/** Xuất `Dataset` ngược lại thành CSV — dùng cho ô nhập tay và nút chép. */
+/**
+ * Xuất `Dataset` ngược lại thành CSV — dùng cho ô nhập tay và nút chép.
+ *
+ * Ô trống của cột số được lưu là `NaN`; phải ghi ra ô RỖNG chứ không phải chữ
+ * "NaN", nếu không dán ngược lại vào sẽ thành cột danh mục vì "NaN" không parse
+ * ra số.
+ */
 export function datasetToCsv(dataset: Dataset): string {
   const esc = (v: string | number) => {
+    if (typeof v === 'number' && Number.isNaN(v)) return ''
     const s = String(v)
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
   }
