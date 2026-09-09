@@ -7,7 +7,7 @@ Tám thuật toán được **cài đặt lại bằng TypeScript thuần** — 
 toàn trong trình duyệt. Mỗi thuật toán hiện đủ **bước trung gian** theo đúng khuôn bảng trong slide
 thầy, không chỉ kết quả cuối.
 
-- Bản chạy thật: <<URL VERCEL>>
+- Bản chạy thật: *chưa deploy* — điền URL vào đây sau khi import repo lên Vercel
 - Mã nguồn: https://github.com/24730090/khai-thac-du-lieu-va-truyen-thong-xa-hoi
 
 ## Thành viên
