@@ -239,12 +239,13 @@ export function DatasetInput({
         </span>
         {allowDecisionAttribute ? (
           <span className="flex items-center gap-2">
-            <Label htmlFor="decision-attr" className="text-xs font-normal">
+            <Label htmlFor="decision-attr" className="text-xs font-normal whitespace-nowrap">
               Cột nhãn lớp
             </Label>
             <Select
               id="decision-attr"
-              className="h-7 w-auto text-xs"
+              className="h-7 text-xs"
+              containerClassName="w-auto"
               value={value.decisionAttribute ?? ''}
               onChange={(e) => onChange({ ...value, decisionAttribute: e.target.value })}
             >

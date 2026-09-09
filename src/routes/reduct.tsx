@@ -89,7 +89,8 @@ function Page() {
             </Label>
             <Select
               id="target"
-              className="h-8 w-auto text-xs"
+              className="h-8 text-xs"
+              containerClassName="w-auto"
               value={targetClass}
               onChange={(e) => setTargetClass(e.target.value)}
             >
