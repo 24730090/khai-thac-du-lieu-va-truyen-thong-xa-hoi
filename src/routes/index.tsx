@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, FlaskConical, GitBranch, ListOrdered, ShieldOff } from 'lucide-react'
 import { ALGORITHM_NAV } from '@/lib/nav'
+import { ALL_SAMPLES } from '@/data/samples'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -8,43 +9,83 @@ export const Route = createFileRoute('/')({
   component: Home,
 })
 
+const PRINCIPLES = [
+  {
+    icon: ShieldOff,
+    title: 'Không gọi thư viện ML',
+    body: 'Cả 8 thuật toán viết bằng TypeScript thuần. Không sklearn, không ml.js, không tensorflow — đề đòi cài đặt thuật toán chứ không phải gọi hàm có sẵn.',
+  },
+  {
+    icon: ListOrdered,
+    title: 'Hiện đủ bước trung gian',
+    body: 'Mỗi thuật toán trả về mảng các bước, không chỉ kết quả cuối. Bảng nào trong slide thì app dựng lại đúng bảng đó, xem được cả trọn bài lẫn đi từng bước một.',
+  },
+  {
+    icon: FlaskConical,
+    title: 'Đối chiếu được với slide',
+    body: 'Mỗi thuật toán có test so kết quả với chính ví dụ trong slide thầy. Chỗ nào app lệch với slide đều được ghi rõ lý do thay vì ép cho khớp.',
+  },
+  {
+    icon: GitBranch,
+    title: 'Chạy hoàn toàn trong trình duyệt',
+    body: 'Không backend, không database. Mở trang là chạy, không có gì để chết vào ngày nộp.',
+  },
+]
+
 function Home() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <header className="space-y-3">
         <Badge variant="outline">IE403 — Khai thác dữ liệu và truyền thông xã hội</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight">
+        <h1 className="text-3xl font-semibold tracking-tight text-balance">
           Web demo các thuật toán khai thác dữ liệu
         </h1>
-        <p className="text-muted-foreground max-w-2xl">
-          Tám thuật toán trong môn được cài đặt lại bằng TypeScript thuần, chạy hoàn toàn trong
-          trình duyệt. Mỗi thuật toán hiện đủ <span className="text-foreground">bước trung gian</span>{' '}
-          theo đúng khuôn bảng trong slide, không chỉ kết quả cuối.
+        <p className="text-muted-foreground text-sm">
+          {ALGORITHM_NAV.length} thuật toán · {ALL_SAMPLES.length} bộ dữ liệu mẫu chép từ slide ·{' '}
+          <Link to="/gioi-thieu" className="text-primary underline underline-offset-4">
+            xem giới thiệu đồ án
+          </Link>
         </p>
       </header>
 
-      <section className="grid gap-3 sm:grid-cols-2">
-        {ALGORITHM_NAV.map((item) => (
-          <Link key={item.to} to={item.to} className="group">
-            <Card className="hover:border-ring h-full gap-3 py-4 transition-colors">
-              <CardHeader className="px-4">
-                <CardTitle className="flex items-center justify-between gap-2 text-base">
-                  {item.label}
-                  <ArrowRight className="text-muted-foreground size-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
-                </CardTitle>
-                <CardDescription>Slide gốc: {item.slide}</CardDescription>
-              </CardHeader>
-            </Card>
-          </Link>
-        ))}
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold">Tám thuật toán</h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {ALGORITHM_NAV.map((item, i) => (
+            <Link key={item.to} to={item.to} className="group">
+              <Card className="hover:border-ring h-full gap-2 py-4 transition-colors">
+                <CardHeader className="px-4">
+                  <CardTitle className="flex items-center justify-between gap-2 text-base">
+                    <span className="flex items-baseline gap-2">
+                      <span className="text-muted-foreground text-xs tabular-nums">{i + 1}.</span>
+                      {item.label}
+                    </span>
+                    <ArrowRight className="text-muted-foreground size-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
+                  </CardTitle>
+                  <CardDescription>Slide gốc: {item.slide}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </section>
 
-      <Card className="border-dashed">
-        <CardContent className="text-muted-foreground text-sm">
-          Trang chủ hiện mới là khung điều hướng. Nội dung đầy đủ — mô tả đồ án, ảnh chụp, hướng
-          dẫn dùng — thuộc F12.
-        </CardContent>
-      </Card>
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold">Cách làm</h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {PRINCIPLES.map(({ icon: Icon, title, body }) => (
+            <Card key={title} className="gap-2 py-4">
+              <CardHeader className="px-4">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Icon className="size-4 shrink-0" />
+                  {title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground px-4 text-sm">{body}</CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }
